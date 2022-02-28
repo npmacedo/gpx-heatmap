@@ -1,11 +1,10 @@
 use crate::MapTiles;
 use bevy::prelude::*;
-use bevy_dolly::prelude::{Arm, CameraRig, Smooth, YawPitch};
 use bevy_polyline::{Polyline, PolylineBundle, PolylineMaterial, PolylinePlugin};
 
 mod camera;
 
-use camera::{MainCamera, update_camera};
+use camera::{spawn_camera, update_camera};
 
 #[derive(Component)]
 struct DrawAxes(bool);
@@ -149,6 +148,12 @@ fn draw_polylines(
 pub fn run(map_tiles: MapTiles, activities: Vec<Vec<Vec3>>) {
     App::new()
         .insert_resource(Msaa { samples: 4 })
+        .insert_resource(WindowDescriptor {
+            title: "gpx-heatmap".to_string(),
+            width: 1280.,
+            height: 720.,
+            ..Default::default()
+        })
         .insert_resource(map_tiles)
         .insert_resource(activities)
         .insert_resource(DrawAxes(false))
@@ -173,19 +178,6 @@ fn setup(mut commands: Commands) {
         transform: Transform::from_xyz(4.0, 8.0, 4.0),
         ..Default::default()
     });
-    commands.spawn().insert(
-        CameraRig::builder()
-            .with(YawPitch::new().yaw_degrees(0.0).pitch_degrees(-30.0))
-            .with(Smooth::new_rotation(1.5))
-            .with(Arm::new(Vec3::Z * 15.0))
-            .build(),
-    );
-    commands
-        .spawn_bundle(PerspectiveCameraBundle {
-            transform: Transform::from_xyz(0., 50., 25.)
-                .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
-            ..Default::default()
-        })
-        .insert(MainCamera);
-    
+
+    spawn_camera(commands);
 }

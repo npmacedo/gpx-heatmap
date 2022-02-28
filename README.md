@@ -14,4 +14,4 @@ Add your activities to the `gpx` folder and then run
 cargo run --release
 ```
 
-To move a camera use the arrows keys or move the mouse with the right button pressed.
+Use the left mouse button to rotate, right button to pan, scroll wheel to move inwards/outwards.
