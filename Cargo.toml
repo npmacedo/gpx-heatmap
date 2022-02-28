@@ -1,0 +1,16 @@
+[package]
+name = "gpx-heatmap"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gpx = "0.8.5"
+reqwest = { version="0.11.9", features = ["blocking"] }
+image = "0.24.1"
+bevy = "0.6.1"
+bevy_polyline = "0.1"
+rand = "0.8.5"
+bevy_dolly = { git="https://github.com/BlackPhlox/bevy_dolly" }
+glam = "0.20.0"
